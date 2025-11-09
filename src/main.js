@@ -1,3 +1,6 @@
+import Router from "@/router.js";
+import { Layout } from "./components/layout";
+
 const enableMocking = () =>
   import("./mocks/browser.js").then(({ worker }) =>
     worker.start({
@@ -6,6 +9,7 @@ const enableMocking = () =>
   );
 
 function main() {
+  /* eslint-disable no-unused-vars */
   const 상품목록_레이아웃_로딩 = `
     <div class="min-h-screen bg-gray-50">
       <header class="bg-white shadow-sm sticky top-0 z-40">
@@ -1119,29 +1123,37 @@ function main() {
     </main>
   `;
 
-  document.body.innerHTML = `
-    ${상품목록_레이아웃_로딩}
-    <br />
-    ${상품목록_레이아웃_로딩완료}
-    <br />
-    ${상품목록_레이아웃_카테고리_1Depth}
-    <br />
-    ${상품목록_레이아웃_카테고리_2Depth}
-    <br />
-    ${토스트}
-    <br />
-    ${장바구니_비어있음}
-    <br />
-    ${장바구니_선택없음}
-    <br />
-    ${장바구니_선택있음}
-    <br />
-    ${상세페이지_로딩}
-    <br />
-    ${상세페이지_로딩완료}
-    <br />
-    ${_404_}
-  `;
+  // document.body.innerHTML = `
+  //   ${상품목록_레이아웃_로딩}
+  //   <br />
+  //   ${상품목록_레이아웃_로딩완료}
+  //   <br />
+  //   ${상품목록_레이아웃_카테고리_1Depth}
+  //   <br />
+  //   ${상품목록_레이아웃_카테고리_2Depth}
+  //   <br />
+  //   ${토스트}
+  //   <br />
+  //   ${장바구니_비어있음}
+  //   <br />
+  //   ${장바구니_선택없음}
+  //   <br />
+  //   ${장바구니_선택있음}
+  //   <br />
+  //   ${상세페이지_로딩}
+  //   <br />
+  //   ${상세페이지_로딩완료}
+  //   <br />
+  //   ${_404_}
+  // `;
+  // TODO: layout 컴포넌트 어떻게 할껀지 ?
+  // TODO: 404 레이아웃 다르게 하는 케이스 추가해야함
+  /* eslint-enable no-unused-vars */
+  const router = new Router({
+    "/": () => Layout({ content: `<div>메인</div>` }),
+    "/footer": () => Layout({ content: `<div>푸터</div>` }),
+  });
+  router.init();
 }
 
 // 애플리케이션 시작
