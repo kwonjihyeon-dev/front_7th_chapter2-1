@@ -1,6 +1,7 @@
 import { NotFound } from "@/404.js";
 import { Filter } from "@/components/filter/index.js";
 import { Layout } from "@/components/layout";
+import { ProductListPage } from "@/page/index.js";
 import Router from "@/router.js";
 
 const enableMocking = () =>
@@ -1118,7 +1119,10 @@ function main() {
 
   // TODO: layout 컴포넌트 어떻게 할껀지 ?
   const router = new Router({
-    "/": () => Layout({ content: `${Filter()}` }),
+    "/": () =>
+      Layout({
+        content: `${Filter()}<div class="grid grid-cols-2 gap-4 mb-6" id="products-grid">${ProductListPage("products-grid")}</div>`,
+      }),
     "/footer": () => Layout({ content: `<div>푸터</div>` }),
     "/404": () => NotFound(),
   });
