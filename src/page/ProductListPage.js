@@ -61,6 +61,14 @@ export function ProductListPage(router) {
     // }
   }
 
+  const changeInput = (e) => {
+    console.log(e);
+    if (e.key === "Enter") {
+      console.log("Enter 키가 눌렸습니다");
+      // 원하는 동작 수행
+    }
+  };
+
   function mount() {
     unsubscribe = store.subscribe((state) => {
       render(state);
@@ -70,13 +78,18 @@ export function ProductListPage(router) {
 
     render(store.state);
     const container = document.querySelector("main");
+    const input = document.querySelector("#search-input");
+    console.log(container, input);
     container?.addEventListener("click", handleClick);
+    input?.addEventListener("keydown", changeInput);
   }
 
   function unmount() {
     if (unsubscribe) unsubscribe();
     const container = document.querySelector("main");
+    const input = document.querySelector("#search-input");
     container?.removeEventListener("click", handleClick);
+    input?.removeEventListener("keydown", changeInput);
     unsubscribe = null;
   }
 

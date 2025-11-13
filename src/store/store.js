@@ -35,7 +35,6 @@ export const actions = {
   // 카테고리 선택
   setFilters(filters) {
     store.setState({ filters: Object.assign({}, store.state.filters, filters) });
-    console.log("filters-->", store.state.filters);
   },
 
   // 장바구니에 상품 추가
