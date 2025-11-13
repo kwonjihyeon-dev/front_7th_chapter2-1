@@ -28,23 +28,20 @@ export function ProductListPage(router) {
 
     if (category1) {
       actions.setFilters({ category1 });
+      dispatch.fetchProducts({ category1 });
     }
 
     if (category2) {
       actions.setFilters({ category2 });
+      dispatch.fetchProducts({ category2 });
     }
 
     if (breadcrumb) {
       actions.setFilters({ category1: "", category2: "" });
+      dispatch.fetchProducts({ category1: "", category2: "" });
     }
 
     console.log("breadcrumb-->", target.dataset);
-    // if (breadcrumb) {
-    //   actions.setFilters({ category1: "", category2: "" });
-    // }
-    if (target.closest("#limit-select")) {
-      // actions.setFilters({ limit: Number(document.querySelector("#limit-select").value) });
-    }
 
     if (target.closest(".product-card")) {
       const { productId } = target.closest(".product-card").dataset;
@@ -67,12 +64,19 @@ export function ProductListPage(router) {
     // }
   }
 
-  const changeInput = (e) => {
-    console.log(e);
-    if (e.key === "Enter") {
-      console.log("Enter 키가 눌렸습니다");
-      // 원하는 동작 수행
-    }
+  const handleChange = (e) => {
+    if (!e.target.matches("#limit-select")) return;
+    document.querySelector("#limit-select").value = e.target.value;
+    actions.setFilters({ limit: Number(e.target.value) });
+    dispatch.fetchProducts({ limit: Number(e.target.value) });
+  };
+
+  const handleKeydown = (e) => {
+    console.log(e.target.value);
+    if (!e.target.matches("#search-input")) return;
+    if (e.key !== "Enter") return;
+    actions.setFilters({ search: e.target.value });
+    dispatch.fetchProducts({ search: e.target.value });
   };
 
   function mount() {
@@ -84,18 +88,17 @@ export function ProductListPage(router) {
 
     render(store.state);
     const container = document.querySelector("main");
-    const input = document.querySelector("#search-input");
-    console.log(container, input);
     container?.addEventListener("click", handleClick);
-    input?.addEventListener("keydown", changeInput);
+    container?.addEventListener("keydown", handleKeydown);
+    container?.addEventListener("change", handleChange);
   }
 
   function unmount() {
     if (unsubscribe) unsubscribe();
     const container = document.querySelector("main");
-    const input = document.querySelector("#search-input");
     container?.removeEventListener("click", handleClick);
-    input?.removeEventListener("keydown", changeInput);
+    container?.removeEventListener("keydown", handleKeydown);
+    container?.addEventListener("change", handleChange);
     unsubscribe = null;
   }
 

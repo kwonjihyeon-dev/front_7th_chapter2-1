@@ -16,7 +16,7 @@ export const Count = () => {
         class="text-sm border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
       >
         ${options
-          .map((option) => html`<option value="${option}" selected=${option === limit}>${option}개</option>`)
+          .map((option) => html`<option value="${option}" selected="${option === limit}">${option}개</option>`)
           .join("")}
       </select>
     </div>

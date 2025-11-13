@@ -86,11 +86,14 @@ export const dispatch = {
     actions.setIsFetching(true);
 
     try {
-      const { products } = await getProducts(params);
-      const data = await getCategories(params);
-      console.log("data-->", data);
-      actions.setCategories(data);
+      const { products, filters } = await getProducts({ ...store.state.filters, ...params });
+      if (!Object.keys(store.state.categories).length) {
+        // 필터 바뀔 일 없어서 1번만 호출
+        const data = await getCategories(params);
+        actions.setCategories(data);
+      }
       actions.setProducts(products);
+      actions.setFilters(filters);
     } catch (error) {
       console.error("Failed to fetch products", error);
       throw error;
